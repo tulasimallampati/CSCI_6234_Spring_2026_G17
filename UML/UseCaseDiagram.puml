@@ -1,0 +1,47 @@
+@startuml UseCaseDiagram
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Student/Learner" as Student
+actor "System Admin" as Admin
+actor "Matching Algorithm" as Algorithm
+
+rectangle LearnMesh {
+  usecase "Register Account" as UC1
+  usecase "Login" as UC2
+  usecase "Create/Update Profile" as UC3
+  usecase "Set Learning Preferences" as UC4
+  usecase "Join Study Group" as UC5
+  usecase "Create Study Group" as UC6
+  usecase "View Group Recommendations" as UC7
+  usecase "Participate in Session" as UC8
+  usecase "Provide Feedback" as UC9
+  usecase "Manage Users" as UC10
+  usecase "Monitor System" as UC11
+  usecase "Match Users to Groups" as UC12
+  usecase "Update Group Composition" as UC13
+}
+
+Student --> UC1
+Student --> UC2
+Student --> UC3
+Student --> UC4
+Student --> UC5
+Student --> UC6
+Student --> UC7
+Student --> UC8
+Student --> UC9
+
+Admin --> UC10
+Admin --> UC11
+Admin --> UC2
+
+Algorithm --> UC12
+Algorithm --> UC13
+
+UC7 ..> UC12 : <<include>>
+UC5 ..> UC12 : <<include>>
+UC3 ..> UC2 : <<extend>>
+UC4 ..> UC3 : <<extend>>
+
+@enduml
