@@ -1,0 +1,16 @@
+@startuml
+title Register Account — Robustness Diagram
+
+actor "Student/Learner" as Student
+
+boundary "Registration UI" as RegistrationUI
+control "Account Registration Controller" as RegistrationController
+entity "User Account" as UserAccount
+entity "User Profile" as UserProfile
+
+Student --> RegistrationUI : enter signup details
+RegistrationUI --> RegistrationController : submit registration data
+RegistrationController --> UserAccount : create account
+RegistrationController --> UserProfile : initialize profile
+
+@enduml

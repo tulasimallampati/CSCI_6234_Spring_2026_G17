@@ -1,0 +1,16 @@
+@startuml
+title Manage Users (Admin) — Robustness Diagram
+
+actor "System Administrator" as Admin
+
+boundary "Admin User Management Dashboard" as AdminDashboard
+control "User Administration Controller" as UserAdminController
+entity "User Account" as UserAccount
+entity "Audit Log" as AuditLog
+
+Admin --> AdminDashboard : manage users
+AdminDashboard --> UserAdminController : submit admin actions
+UserAdminController --> UserAccount : create/update/suspend users
+UserAdminController --> AuditLog : record administrative actions
+
+@enduml

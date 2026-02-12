@@ -1,0 +1,16 @@
+@startuml
+title Login — Robustness Diagram
+
+actor "Student/Admin" as User
+
+boundary "Login UI" as LoginUI
+control "Authentication Controller" as AuthController
+entity "User Account" as UserAccount
+entity "Session" as Session
+
+User --> LoginUI : enter credentials
+LoginUI --> AuthController : authenticate(credentials)
+AuthController --> UserAccount : validate credentials
+AuthController --> Session : create session
+
+@enduml

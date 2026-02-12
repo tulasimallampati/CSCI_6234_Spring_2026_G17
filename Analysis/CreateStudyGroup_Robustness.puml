@@ -1,0 +1,16 @@
+@startuml
+title Create Study Group — Robustness Diagram
+
+actor "Student/Learner" as Student
+
+boundary "Group Creation Form" as GroupCreationUI
+control "Study Group Management Controller" as GroupController
+entity "Study Group" as StudyGroup
+entity "User Account" as UserAccount
+
+Student --> GroupCreationUI : enter group details
+GroupCreationUI --> GroupController : submit group data
+GroupController --> StudyGroup : create group
+GroupController --> UserAccount : assign creator as moderator
+
+@enduml

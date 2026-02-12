@@ -1,0 +1,18 @@
+@startuml
+title Join Study Group — Robustness Diagram
+
+actor "Student/Learner" as Student
+
+boundary "Group Join Page" as GroupJoinUI
+control "Group Membership Controller" as MembershipController
+entity "Study Group" as StudyGroup
+entity "Group Membership" as GroupMembership
+entity "User Account" as UserAccount
+
+Student --> GroupJoinUI : request to join group
+GroupJoinUI --> MembershipController : submit join request
+MembershipController --> StudyGroup : verify capacity & rules
+MembershipController --> GroupMembership : create membership record
+MembershipController --> UserAccount : update memberships
+
+@enduml

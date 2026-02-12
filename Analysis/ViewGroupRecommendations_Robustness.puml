@@ -1,0 +1,20 @@
+@startuml
+title View Group Recommendations — Robustness Diagram
+
+actor "Student/Learner" as Student
+
+boundary "Recommendations Dashboard" as RecommendationsUI
+control "Recommendation Controller" as RecommendationController
+entity "Matching Engine" as MatchingEngine
+entity "User Profile" as UserProfile
+entity "Study Group" as StudyGroup
+
+Student --> RecommendationsUI : request recommendations
+RecommendationsUI --> RecommendationController : fetch recommendations
+RecommendationController --> MatchingEngine : compute matches
+MatchingEngine --> UserProfile : retrieve preferences
+MatchingEngine --> StudyGroup : retrieve group data
+MatchingEngine --> RecommendationController : return ranked groups
+RecommendationController --> RecommendationsUI : display results
+
+@enduml
