@@ -1,0 +1,16 @@
+@startuml
+title Monitor System (Admin) — Robustness Diagram
+
+actor "System Administrator" as Admin
+
+boundary "System Monitoring Dashboard" as MonitoringDashboard
+control "Monitoring Controller" as MonitoringController
+entity "System Metrics" as SystemMetrics
+entity "Application Logs" as ApplicationLogs
+
+Admin --> MonitoringDashboard : view system status
+MonitoringDashboard --> MonitoringController : request metrics
+MonitoringController --> SystemMetrics : retrieve performance data
+MonitoringController --> ApplicationLogs : retrieve logs
+
+@enduml

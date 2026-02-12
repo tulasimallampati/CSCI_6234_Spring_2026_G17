@@ -1,0 +1,14 @@
+@startuml
+title Set Learning Preferences — Robustness Diagram
+
+actor "Student/Learner" as Student
+
+boundary "Preferences Settings Page" as PreferencesUI
+control "Profile Management Controller" as ProfileController
+entity "User Profile" as UserProfile
+
+Student --> PreferencesUI : edit preferences
+PreferencesUI --> ProfileController : submit preferences
+ProfileController --> UserProfile : update learning profile
+
+@enduml

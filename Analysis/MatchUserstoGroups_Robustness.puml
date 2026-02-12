@@ -1,0 +1,19 @@
+@startuml
+title Match Users to Groups — Robustness Diagram
+
+actor "System Scheduler" as System
+
+boundary "Matching Service API" as MatchingAPI
+control "Matching Orchestration Controller" as MatchingController
+entity "Matching Engine" as MatchingEngine
+entity "User Profile" as UserProfile
+entity "Study Group" as StudyGroup
+
+System --> MatchingAPI : trigger matching job
+MatchingAPI --> MatchingController : start matching process
+MatchingController --> MatchingEngine : execute matching algorithm
+MatchingEngine --> UserProfile : retrieve learner preferences
+MatchingEngine --> StudyGroup : retrieve group requirements
+MatchingEngine --> MatchingController : return compatibility scores
+
+@enduml
