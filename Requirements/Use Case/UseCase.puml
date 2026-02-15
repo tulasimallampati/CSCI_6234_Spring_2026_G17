@@ -1,0 +1,100 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #EEF5FF
+  BorderColor #2B579A
+}
+
+actor Student
+actor Admin
+
+rectangle "LearnMesh Study Group Management System" {
+
+  (Register Account) as register
+  (Login) as login
+
+  (Set Learning Preferences) as preferences
+  (Match Users to Groups) as match
+  (View Group Recommendations) as recommendations
+  (Join Study Group) as join
+  (Create Study Group) as create
+
+  (Manage Users) as manage
+  (Monitor System) as monitor
+
+  '================ STUDENT =================
+  Student --> register
+  Student --> preferences
+  Student --> recommendations
+  Student --> join
+  Student --> create
+
+  '================ ADMIN =================
+  Admin --> manage
+  Admin --> monitor
+
+  '================ AUTHENTICATION =================
+  preferences .> login : <<include>>
+  match .> login : <<include>>
+  recommendations .> login : <<include>>
+  join .> login : <<include>>
+  create .> login : <<include>>
+  manage .> login : <<include>>
+  monitor .> login : <<include>>
+
+  '================ FUNCTIONAL FLOW =================
+  match .> preferences : <<include>>
+  recommendations .> match : <<include>>
+  join .> recommendations : <<include>>
+
+}
+
+'================ NOTES =================
+
+note right of register
+Creates a new student account
+using username, email, and password.
+end note
+
+note right of login
+Authenticates user and grants
+access based on role.
+end note
+
+note right of preferences
+Student enters skills, interests,
+learning style, and availability.
+end note
+
+note right of match
+System calculates compatibility
+between students and study groups.
+end note
+
+note right of recommendations
+Displays suggested groups ranked
+by compatibility score.
+end note
+
+note right of join
+Enrolls student into selected
+recommended study group.
+end note
+
+note right of create
+Student creates a new study group
+and becomes moderator.
+end note
+
+note right of manage
+Admin edits, suspends or deletes
+user accounts.
+end note
+
+note right of monitor
+Admin monitors platform activity
+and system health.
+end note
+
+@enduml
