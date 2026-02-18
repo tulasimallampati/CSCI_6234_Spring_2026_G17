@@ -1,0 +1,121 @@
+@startuml
+left to right direction
+skinparam classAttributeIconSize 0
+
+' -------------------------
+' USER ENTITIES
+' -------------------------
+class Student {
+  - studentId : int
+  - name : String
+  - email : String
+  - password : String
+  - major : String
+}
+
+class Admin {
+  - adminId : int
+  - name : String
+  - email : String
+  - password : String
+  - adminLevel : int
+}
+
+note top of Student
+  Domain Model Description:
+  The domain model represents the core entities and relationships 
+  of a study‑group recommendation and matching system. The system 
+  includes Students, who create and join study groups, and Admins, 
+  who monitor and manage the platform. Students can define multiple 
+  LearningPreferences describing their subject interests, preferred 
+  time slots, learning styles, and skill levels. These preferences 
+  are compared against available StudyGroups, which are created by 
+  students and contain details such as subject, description, time 
+  slot, and capacity. A matching algorithm produces MatchingResults 
+  linking each LearningPreference to compatible StudyGroups with a 
+  computed compatibility score. Students join groups through 
+  GroupMembership records, which also help prevent time‑slot 
+  conflicts. LoginSession tracks authentication activity for both 
+  Students and Admins, while SystemLog records administrative 
+  monitoring actions. Overall, the domain model captures all 
+  essential data structures needed to support registration, 
+  preference setting, matching, recommendations, group creation, 
+  joining, and administrative oversight.
+end note
+
+' -------------------------
+' LOGIN SESSIONS
+' -------------------------
+class LoginSession {
+  - sessionId : String
+  - loginTime : Date
+  - logoutTime : Date
+  - isActive : boolean
+}
+
+Student "1" -- "0..*" LoginSession
+Admin "1" -- "0..*" LoginSession
+
+' -------------------------
+' LEARNING PREFERENCES
+' -------------------------
+class LearningPreference {
+  - preferenceId : int
+  - subject : String
+  - preferredTimeSlot : String
+  - learningStyle : String
+  - skillLevel : String
+}
+
+Student "1" -- "0..*" LearningPreference
+
+' -------------------------
+' STUDY GROUP
+' -------------------------
+class StudyGroup {
+  - groupId : int
+  - groupName : String
+  - subject : String
+  - description : String
+  - timeSlot : String
+  - maxMembers : int
+}
+
+Student "1" -- "0..*" StudyGroup : creates >
+
+' -------------------------
+' GROUP MEMBERSHIP
+' -------------------------
+class GroupMembership {
+  - membershipId : int
+  - joinDate : Date
+  - status : String
+}
+
+Student "1" -- "0..*" GroupMembership
+StudyGroup "1" -- "0..*" GroupMembership
+
+' -------------------------
+' MATCHING RESULT
+' -------------------------
+class MatchingResult {
+  - resultId : int
+  - compatibilityScore : double
+  - generatedAt : Date
+}
+
+LearningPreference "1" -- "0..*" MatchingResult
+StudyGroup "1" -- "0..*" MatchingResult
+
+' -------------------------
+' SYSTEM LOG
+' -------------------------
+class SystemLog {
+  - logId : int
+  - action : String
+  - timestamp : Date
+  - severity : String
+}
+
+Admin "1" -- "0..*" SystemLog
+@enduml
