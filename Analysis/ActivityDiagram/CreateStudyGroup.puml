@@ -1,0 +1,44 @@
+@startuml
+title Create Study Group Activity Diagram
+
+start
+:1. Open create study group page;
+:2. Enter group name;
+:3. Enter subject;
+:4. Enter study topics;
+:5. Define availability schedule;
+:6. Set required skill level;
+:7. Enter maximum number of students;
+:8. Add group description;
+:9. Submit group creation request;
+:10. Validate group details;
+
+if (11. Details valid?) then (Yes)
+  :12. Create study group;
+  :13. Store group information in database;
+  :14. Display creation confirmation;
+else (No)
+  :15. Show validation error;
+endif
+
+stop
+
+note right
+Activity Description:
+1. Student opens the group creation interface.
+2. Group name is provided.
+3. Subject for study group is entered.
+4. Topics covered in the group are specified.
+5. Study availability schedule is defined.
+6. Required skill level is selected.
+7. Maximum number of students allowed is set.
+8. Student adds group description.
+9. Creation request is submitted.
+10. System validates entered details.
+11. Validation decision is performed.
+12. Study group is created.
+13. Group data stored in database.
+14. Confirmation message displayed.
+15. Error message shown if validation fails.
+end note
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+title Match Users to Groups Activity Diagram
+
+start
+:1. Retrieve student learning preferences;
+:2. Fetch available study groups;
+:3. Execute compatibility matching algorithm;
+:4. Calculate compatibility score;
+:5. Rank study groups;
+:6. Store compatibility scores in database;
+:7. Generate recommended groups list;
+
+stop
+
+note right
+Activity Description:
+1. System retrieves stored learning preferences.
+2. Available study groups are collected.
+3. Matching algorithm compares preferences.
+4. Compatibility score calculated.
+5. Groups ranked based on score.
+6. Scores saved for recommendation reuse.
+7. Recommended study groups generated.
+end note
+@enduml

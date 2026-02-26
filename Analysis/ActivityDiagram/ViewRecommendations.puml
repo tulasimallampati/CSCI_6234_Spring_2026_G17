@@ -1,0 +1,26 @@
+@startuml
+title View Group Recommendations Activity Diagram
+
+start
+:1. Request recommendations;
+:2. Run matching Algorithm;
+:3. Display top 5 ranked groups;
+
+if (4. Group selected?) then (Yes)
+  :5. Proceed to join group;
+else (No)
+  :6. Return to dashboard;
+endif
+
+stop
+
+note right
+Activity Description:
+1. Student requests recommendations.
+2. Matching process executes.
+3. Recommended groups displayed.
+4. Student decides whether to join.
+5. Joining process begins.
+6. User returns to dashboard otherwise.
+end note
+@enduml

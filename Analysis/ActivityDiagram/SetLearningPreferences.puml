@@ -1,0 +1,27 @@
+@startuml
+title Set Learning Preferences Activity Diagram
+
+start
+:1. Open learning preference settings;
+:2. Enter subject;
+:3. Enter topics;
+:4. Select availability;
+:5. Choose skill level;
+:6. Submit preferences;
+:7. Validate input data;
+:8. Store learning preferences in database;
+
+stop
+
+note right
+Activity Description:
+1. Student opens preference settings.
+2. Subject is entered.
+3. Topics are specified.
+4. Availability schedule selected.
+5. Skill level defined.
+6. Preferences submitted.
+7. System validates data.
+8. Learning preferences stored in database.
+end note
+@enduml

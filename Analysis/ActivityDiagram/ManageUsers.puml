@@ -1,0 +1,27 @@
+@startuml
+title Manage Users Activity Diagram
+
+start
+:1. Open user management;
+:2. Search/select user;
+:3. View user details;
+
+if (4. Action required?) then (Yes)
+  :5. Edit/Suspend/Delete user;
+  :6. Update database;
+endif
+
+:7. Display updated status;
+stop
+
+note right
+Activity Description:
+1. Admin opens management module.
+2. User is searched or selected.
+3. Details displayed.
+4. Admin decides action.
+5. Account modified or removed.
+6. Database updated.
+7. Updated status shown.
+end note
+@enduml

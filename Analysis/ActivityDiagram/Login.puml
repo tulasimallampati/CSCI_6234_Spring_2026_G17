@@ -1,0 +1,26 @@
+@startuml
+title Login Activity Diagram
+
+start
+:1. Enter username and password;
+:2. Authenticate credentials;
+
+if (3. Credentials valid?) then (Yes)
+  :4. Identify user role;
+  :5. Grant system access;
+else (No)
+  :6. Display login error;
+endif
+
+stop
+
+note right
+Activity Description:
+1. User provides login credentials.
+2. System authenticates user.
+3. Credential validation occurs.
+4. User role is determined.
+5. Access is granted.
+6. Error message shown if invalid.
+end note
+@enduml

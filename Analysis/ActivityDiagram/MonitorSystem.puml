@@ -1,0 +1,27 @@
+@startuml
+title Monitor System Activity Diagram
+
+start
+:1. Admin accesses dashboard;
+:2. View system metrics;
+:3. Monitor active users;
+:4. Review group activities;
+:5. Detect system issues;
+
+if (6. Issue detected?) then (Yes)
+  :7. Take corrective action;
+endif
+
+stop
+
+note right
+Activity Description:
+1. Admin logs into dashboard.
+2. System metrics reviewed.
+3. Active users monitored.
+4. Study activities checked.
+5. Issues detected.
+6. Decision made.
+7. Corrective action performed.
+end note
+@enduml

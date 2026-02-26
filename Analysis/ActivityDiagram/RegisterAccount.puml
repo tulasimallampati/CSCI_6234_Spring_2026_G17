@@ -1,0 +1,30 @@
+@startuml
+title Register Account Activity Diagram
+
+start
+:1. Open registration page;
+:2. Enter user details;
+:3. Validate input data;
+
+if (4. Details valid?) then (Yes)
+  :5. Create student account;
+  :6. Store data in database;
+  :7. Display success message;
+else (No)
+  :8. Show validation error;
+endif
+
+stop
+
+note right
+Activity Description:
+1. User opens registration page.
+2. User enters account details.
+3. System validates the information.
+4. System checks validity.
+5. Account is created.
+6. Data is saved in database.
+7. Success message is displayed.
+8. Error shown if validation fails.
+end note
+@enduml
