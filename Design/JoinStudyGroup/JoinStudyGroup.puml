@@ -1,0 +1,36 @@
+@startuml
+actor Student
+
+boundary GroupController
+control GroupService
+entity StudyGroupRepository
+entity GroupMembershipRepository
+
+Student -> GroupController : requestJoin(groupId)
+activate GroupController
+
+GroupController -> GroupService : processJoinRequest(studentId,groupId)
+activate GroupService
+note right of GroupService
+Check group capacity
+Verify student not already member
+Create membership record
+end note
+
+GroupService -> StudyGroupRepository : findById(groupId)
+activate StudyGroupRepository
+StudyGroupRepository --> GroupService : group
+deactivate StudyGroupRepository
+
+GroupService -> GroupMembershipRepository : save(membership)
+activate GroupMembershipRepository
+GroupMembershipRepository --> GroupService : saved
+deactivate GroupMembershipRepository
+
+GroupService --> GroupController : joinSuccess
+deactivate GroupService
+
+GroupController --> Student : displayJoinConfirmation()
+deactivate GroupController
+
+@enduml
