@@ -1,0 +1,50 @@
+@startuml
+actor Student
+
+boundary RecommendationController
+control RecommendationService
+control MatchingService
+entity LearningPreferenceRepository
+entity StudyGroupRepository
+entity MatchingResultRepository
+
+Student -> RecommendationController : requestRecommendations()
+activate RecommendationController
+
+RecommendationController -> RecommendationService : generateRecommendations(studentId)
+activate RecommendationService
+
+RecommendationService -> LearningPreferenceRepository : fetchPreferences(studentId)
+activate LearningPreferenceRepository
+LearningPreferenceRepository --> RecommendationService : preferences
+deactivate LearningPreferenceRepository
+
+RecommendationService -> StudyGroupRepository : fetchAvailableGroups()
+activate StudyGroupRepository
+StudyGroupRepository --> RecommendationService : groupList
+deactivate StudyGroupRepository
+
+RecommendationService -> MatchingService : calculateCompatibility(preferences,groupList)
+activate MatchingService
+note right of MatchingService
+Compare subject
+Match time slot
+Compare skill level
+Compute compatibility score
+Rank groups
+end note
+MatchingService --> RecommendationService : rankedResults
+deactivate MatchingService
+
+RecommendationService -> MatchingResultRepository : saveResults(rankedResults)
+activate MatchingResultRepository
+MatchingResultRepository --> RecommendationService : saved
+deactivate MatchingResultRepository
+
+RecommendationService --> RecommendationController : returnRankedResults
+deactivate RecommendationService
+
+RecommendationController --> Student : displayRecommendations()
+deactivate RecommendationController
+
+@enduml
