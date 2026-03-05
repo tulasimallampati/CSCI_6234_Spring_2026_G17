@@ -1,0 +1,36 @@
+@startuml
+actor Student
+
+boundary AuthController
+control AuthService
+entity StudentRepository
+entity LoginSessionRepository
+
+Student -> AuthController : submitLogin(email,password)
+activate AuthController
+
+AuthController -> AuthService : authenticateUser(email,password)
+activate AuthService
+note right of AuthService
+Fetch user by email
+Validate password
+Generate session token
+end note
+
+AuthService -> StudentRepository : findByEmail(email)
+activate StudentRepository
+StudentRepository --> AuthService : student
+deactivate StudentRepository
+
+AuthService -> LoginSessionRepository : createSession(student)
+activate LoginSessionRepository
+LoginSessionRepository --> AuthService : sessionCreated
+deactivate LoginSessionRepository
+
+AuthService --> AuthController : authenticationResult
+deactivate AuthService
+
+AuthController --> Student : displayDashboard()
+deactivate AuthController
+
+@enduml
