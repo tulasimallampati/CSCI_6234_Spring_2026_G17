@@ -1,0 +1,35 @@
+@startuml
+actor Admin
+
+boundary AdminController
+control AdminService
+entity StudentRepository
+
+Admin -> AdminController : manageUser(userId,action)
+activate AdminController
+
+AdminController -> AdminService : updateUserStatus(userId,action)
+activate AdminService
+note right of AdminService
+Validate admin permissions
+Fetch user
+Update status (active/suspended)
+end note
+
+AdminService -> StudentRepository : findById(userId)
+activate StudentRepository
+StudentRepository --> AdminService : student
+deactivate StudentRepository
+
+AdminService -> StudentRepository : save(updatedStudent)
+activate StudentRepository
+StudentRepository --> AdminService : updated
+deactivate StudentRepository
+
+AdminService --> AdminController : success
+deactivate AdminService
+
+AdminController --> Admin : displayConfirmation()
+deactivate AdminController
+
+@enduml
