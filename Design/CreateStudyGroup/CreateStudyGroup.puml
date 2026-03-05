@@ -1,0 +1,30 @@
+@startuml
+actor Student
+
+boundary StudyGroupController
+control StudyGroupService
+entity StudyGroupRepository
+
+Student -> StudyGroupController : submitGroupDetails(data)
+activate StudyGroupController
+
+StudyGroupController -> StudyGroupService : createGroup(studentId,data)
+activate StudyGroupService
+note right of StudyGroupService
+Validate group details
+Set creator as owner
+Initialize member count
+end note
+
+StudyGroupService -> StudyGroupRepository : save(group)
+activate StudyGroupRepository
+StudyGroupRepository --> StudyGroupService : groupSaved
+deactivate StudyGroupRepository
+
+StudyGroupService --> StudyGroupController : success
+deactivate StudyGroupService
+
+StudyGroupController --> Student : displayGroupCreated()
+deactivate StudyGroupController
+
+@enduml
