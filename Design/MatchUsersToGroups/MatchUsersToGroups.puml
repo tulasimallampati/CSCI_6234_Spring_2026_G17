@@ -1,0 +1,51 @@
+@startuml
+actor System
+
+boundary MatchingController
+control MatchingService
+entity LearningPreferenceRepository
+entity StudyGroupRepository
+entity MatchingResultRepository
+
+System -> MatchingController : triggerMatching(studentId)
+activate MatchingController
+
+MatchingController -> MatchingService : matchStudentToGroups(studentId)
+activate MatchingService
+note right of MatchingService
+Retrieve student learning preferences
+Fetch available study groups
+Apply compatibility algorithm
+Rank groups based on score
+end note
+
+MatchingService -> LearningPreferenceRepository : findByStudentId(studentId)
+activate LearningPreferenceRepository
+LearningPreferenceRepository --> MatchingService : preferences
+deactivate LearningPreferenceRepository
+
+MatchingService -> StudyGroupRepository : findAvailableGroups()
+activate StudyGroupRepository
+StudyGroupRepository --> MatchingService : groupList
+deactivate StudyGroupRepository
+
+MatchingService -> MatchingService : calculateCompatibility(preferences, groupList)
+note right
+Compare subject
+Match availability
+Evaluate skill level
+Compute compatibility score
+end note
+
+MatchingService -> MatchingResultRepository : saveMatchingResults(results)
+activate MatchingResultRepository
+MatchingResultRepository --> MatchingService : resultsSaved
+deactivate MatchingResultRepository
+
+MatchingService --> MatchingController : rankedGroupList
+deactivate MatchingService
+
+MatchingController --> System : returnResults
+deactivate MatchingController
+
+@enduml
