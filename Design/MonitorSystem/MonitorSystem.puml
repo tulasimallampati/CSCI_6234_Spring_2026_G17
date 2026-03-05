@@ -1,0 +1,30 @@
+@startuml
+actor Admin
+
+boundary AdminController
+control AdminService
+entity SystemLogRepository
+
+Admin -> AdminController : requestSystemLogs()
+activate AdminController
+
+AdminController -> AdminService : fetchSystemLogs()
+activate AdminService
+note right of AdminService
+Retrieve recent logs
+Filter by severity if required
+Sort by timestamp
+end note
+
+AdminService -> SystemLogRepository : findAll()
+activate SystemLogRepository
+SystemLogRepository --> AdminService : logs
+deactivate SystemLogRepository
+
+AdminService --> AdminController : returnLogs
+deactivate AdminService
+
+AdminController --> Admin : displayLogs()
+deactivate AdminController
+
+@enduml
