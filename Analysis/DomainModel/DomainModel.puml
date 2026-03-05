@@ -1,0 +1,103 @@
+@startuml
+skinparam classAttributeIconSize 0
+left to right direction
+
+' -----------------------------
+' STUDENT
+' -----------------------------
+class Student {
+  -studentId : int
+  -name : String
+  -email : String
+  -password : String
+  -major : String
+}
+
+' -----------------------------
+' LEARNING PREFERENCE
+' -----------------------------
+class LearningPreference {
+  -preferenceId : int
+  -subject : String
+  -preferredTimeSlot : String
+  -skillLevel : String
+}
+
+' -----------------------------
+' STUDY GROUP
+' -----------------------------
+class StudyGroup {
+  -groupId : int
+  -groupName : String
+  -subject : String
+  -description : String
+  -timeSlot : String
+  -maxMembers : int
+}
+
+' -----------------------------
+' MATCHING RESULT
+' -----------------------------
+class MatchingResult {
+  -resultId : int
+  -compatibilityScore : double
+  -generatedAt : Date
+}
+
+' -----------------------------
+' GROUP MEMBERSHIP
+' -----------------------------
+class GroupMembership {
+  -membershipId : int
+  -joinDate : Date
+  -status : String
+}
+
+' -----------------------------
+' LOGIN SESSION
+' -----------------------------
+class LoginSession {
+  -sessionId : String
+  -loginTime : Date
+  -logoutTime : Date
+  -isActive : boolean
+}
+
+' -----------------------------
+' ADMIN
+' -----------------------------
+class Admin {
+  -adminId : int
+  -name : String
+  -email : String
+  -password : String
+  -adminLevel : int
+}
+
+' -----------------------------
+' SYSTEM LOG
+' -----------------------------
+class SystemLog {
+  -logId : int
+  -action : String
+  -timestamp : Date
+  -severity : String
+}
+
+' =============================
+' ASSOCIATIONS
+' =============================
+
+Student "1" -- "0..*" LearningPreference : sets
+Student "1" -- "0..*" StudyGroup : creates
+Student "1" -- "0..*" GroupMembership : joins
+Student "1" -- "0..*" LoginSession : logs in
+
+StudyGroup "1" -- "0..*" GroupMembership : has members
+StudyGroup "1" -- "0..*" MatchingResult : produces
+
+LearningPreference "1" -- "0..*" MatchingResult : based on
+
+Admin "1" -- "0..*" LoginSession : logs in
+Admin "1" -- "0..*" SystemLog : monitors
+@enduml
