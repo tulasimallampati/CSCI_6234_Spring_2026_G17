@@ -1,0 +1,30 @@
+@startuml
+actor Student
+
+boundary RegisterController
+control StudentService
+entity StudentRepository
+
+Student -> RegisterController : submitRegistrationForm(data)
+activate RegisterController
+
+RegisterController -> StudentService : validateAndRegister(data)
+activate StudentService
+note right of StudentService
+Validates input data
+Checks if email already exists
+Creates Student object
+end note
+
+StudentService -> StudentRepository : save(student)
+activate StudentRepository
+StudentRepository --> StudentService : studentSaved
+deactivate StudentRepository
+
+StudentService --> RegisterController : registrationSuccess
+deactivate StudentService
+
+RegisterController --> Student : displayConfirmation()
+deactivate RegisterController
+
+@enduml
