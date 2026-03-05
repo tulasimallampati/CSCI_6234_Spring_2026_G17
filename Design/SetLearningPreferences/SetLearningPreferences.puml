@@ -1,0 +1,30 @@
+@startuml
+actor Student
+
+boundary PreferenceController
+control PreferenceService
+entity LearningPreferenceRepository
+
+Student -> PreferenceController : submitPreferences(data)
+activate PreferenceController
+
+PreferenceController -> PreferenceService : savePreferences(studentId,data)
+activate PreferenceService
+note right of PreferenceService
+Validate preference data
+Create LearningPreference entity
+Associate with student
+end note
+
+PreferenceService -> LearningPreferenceRepository : save(preference)
+activate LearningPreferenceRepository
+LearningPreferenceRepository --> PreferenceService : saved
+deactivate LearningPreferenceRepository
+
+PreferenceService --> PreferenceController : success
+deactivate PreferenceService
+
+PreferenceController --> Student : showConfirmation()
+deactivate PreferenceController
+
+@enduml
