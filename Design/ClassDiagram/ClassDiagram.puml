@@ -1,0 +1,104 @@
+@startuml
+
+class Student {
+  -studentId : int
+  -name : String
+  -email : String
+  -password : String
+  -major : String
+  +register()
+  +login()
+  +setLearningPreference()
+  +createStudyGroup()
+  +joinStudyGroup()
+  +viewRecommendations()
+}
+
+class Admin {
+  -adminId : int
+  -name : String
+  -email : String
+  -password : String
+  -adminLevel : int
+  +login()
+  +monitorSystem()
+  +viewSystemLogs()
+}
+
+class LearningPreference {
+  -preferenceId : int
+  -subject : String
+  -preferredTimeSlot : String
+  -learningStyle : String
+  -skillLevel : String
+  +createPreference()
+  +updatePreference()
+  +deletePreference()
+}
+
+class StudyGroup {
+  -groupId : int
+  -groupName : String
+  -subject : String
+  -description : String
+  -timeSlot : String
+  -maxMembers : int
+  +createGroup()
+  +updateGroupDetails()
+  +addMember()
+  +removeMember()
+  +getGroupMembers()
+}
+
+class GroupMembership {
+  -membershipId : int
+  -joinDate : Date
+  -status : String
+  +joinGroup()
+  +leaveGroup()
+  +updateMembershipStatus()
+}
+
+class MatchingResult {
+  -resultId : int
+  -compatibilityScore : double
+  -generatedAt : Date
+  +calculateCompatibility()
+  +rankGroups()
+  +storeMatchingResult()
+}
+
+class LoginSession {
+  -sessionId : String
+  -loginTime : Date
+  -logoutTime : Date
+  -isActive : boolean
+  +startSession()
+  +endSession()
+  +validateSession()
+}
+
+class SystemLog {
+  -logId : int
+  -action : String
+  -timestamp : Date
+  -severity : String
+  +recordLog()
+  +viewLogs()
+  +filterLogs()
+}
+
+Student "1" -- "0..*" LearningPreference : sets
+Student "1" -- "0..*" StudyGroup : creates
+Student "1" -- "0..*" GroupMembership : joins
+StudyGroup "1" -- "0..*" GroupMembership : hasMember
+
+LearningPreference "1" -- "0..*" MatchingResult : basedOn
+StudyGroup "1" -- "0..*" MatchingResult : matchedWith
+
+Student "1" -- "0..*" LoginSession : logsIn
+Admin "1" -- "0..*" LoginSession : logsIn
+
+Admin "1" -- "0..*" SystemLog : monitors
+
+@enduml
