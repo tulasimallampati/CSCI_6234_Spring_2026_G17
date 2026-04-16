@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Details | LearnMesh Admin</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=25}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1500&q=80')
+                        no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(6px);
+            z-index: 1;
+        }
+
+        nav {
+            background: rgba(0, 38, 77, 0.85);
+            backdrop-filter: blur(6px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 5;
+        }
+
+        nav .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            font-family: 'Playfair Display', serif;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            width: 900px;
+            margin: 140px auto;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #003366;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.55);
+            padding: 20px;
+            border-radius: 14px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+            margin-bottom: 20px;
+        }
+
+        .group-item {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .group-item:last-child {
+            border-bottom: none;
+        }
+
+        .group-item a {
+            color: #003366;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .group-item a:hover {
+            color: #0077b6;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background: #003366;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: #00509e;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<nav>
+    <div class="logo">LearnMesh Admin</div>
+    <ul>
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/users">Manage Users</a></li>
+        <li><a href="/admin/groups">Manage Groups</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <h1 th:text="'User Details — ' + ${user.firstName} + ' ' + ${user.lastName}"></h1>
+
+    <!-- USER INFO -->
+    <div class="card">
+        <p><strong>Name:</strong> <span th:text="${user.firstName + ' ' + user.lastName}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        <p><strong>Role:</strong> <span th:text="${user.role}"></span></p>
+    </div>
+
+    <!-- GROUPS CREATED -->
+    <div class="section-title">Groups Created</div>
+
+    <div class="card" th:if="${#lists.isEmpty(groupsCreated)}">
+        <p>This user has not created any groups.</p>
+    </div>
+
+    <div class="card" th:each="g : ${groupsCreated}">
+        <div class="group-item">
+            <a th:href="@{'/groups/' + ${g.id}}" th:text="${g.name}"></a>
+        </div>
+    </div>
+
+    <!-- GROUPS JOINED -->
+    <div class="section-title">Groups Joined</div>
+
+    <div class="card" th:if="${#lists.isEmpty(groupsJoined)}">
+        <p>This user has not joined any groups.</p>
+    </div>
+
+    <div class="card" th:each="g : ${groupsJoined}">
+        <div class="group-item">
+            <a th:href="@{'/groups/' + ${g.id}}" th:text="${g.name}"></a>
+        </div>
+    </div>
+
+    <a href="/admin/users" class="back-btn">← Back to Manage Users</a>
+
+</div>
+
+</body>
+</html>

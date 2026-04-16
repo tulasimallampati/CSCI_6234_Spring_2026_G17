@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Preferences | LearnMesh</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=25}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1500&q=80')
+                        no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(6px);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            width: 80%;
+            margin: 140px auto;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            margin-bottom: 30px;
+        }
+
+        .pref-card {
+            background: rgba(255,255,255,0.55);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: 0.2s ease;
+        }
+
+        .pref-card:hover {
+            background: rgba(255,255,255,0.75);
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            background: #0059b3;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-danger {
+            background: #cc0000;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-edit {
+            background: #006600;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .empty-box {
+            background: rgba(255,255,255,0.55);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<nav>
+    <div class="logo">LearnMesh</div>
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/preferences">Set Preferences</a></li>
+        <li><a href="/recommendations">Recommendations</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <h1>My Learning Preferences</h1>
+
+    <div th:if="${#lists.isEmpty(preferences)}" class="empty-box">
+        <h2>No Preferences Found</h2>
+        <p>Set your learning preferences to receive personalized recommendations.</p>
+        <a href="/preferences"><button class="btn-primary">Set Preferences</button></a>
+    </div>
+
+    <div th:each="pref : ${preferences}" class="pref-card">
+
+        <h2>
+            <span th:text="${pref.branch}"></span> |
+            <span th:text="${pref.technology}"></span> |
+            <span th:text="${pref.knowledgeLevel}"></span>
+        </h2>
+
+        <p><strong>Mode:</strong> <span th:text="${pref.preferredMeetingMode}"></span></p>
+
+        <p><strong>Time:</strong>
+            <span th:text="${#temporals.format(pref.preferredStartTime, 'MMM dd yyyy, HH:mm')}"></span>
+            -
+            <span th:text="${#temporals.format(pref.preferredEndTime, 'MMM dd yyyy, HH:mm')}"></span>
+        </p>
+
+        <div style="margin-top:15px;">
+            <a th:href="@{'/recommendations?prefId=' + ${pref.id}}">
+                <button class="btn-primary">View Recommendations</button>
+            </a>
+
+            <a th:href="@{'/preferences/' + ${pref.id} + '/edit'}">
+                <button class="btn-edit">Edit</button>
+            </a>
+
+            <form th:action="@{'/preferences/' + ${pref.id} + '/delete'}" method="post" style="display:inline;">
+                <button class="btn-danger" type="submit">Delete</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

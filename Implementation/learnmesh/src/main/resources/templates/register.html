@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Account | LearnMesh</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=15}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1500&q=80')
+                        no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.70);
+            backdrop-filter: blur(4px);
+            z-index: 1;
+        }
+
+        .register-box {
+            position: relative;
+            z-index: 3;
+            width: 460px;
+            margin: 120px auto;
+            background: rgba(255, 255, 255, 0.55);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+        }
+
+        h1 {
+            font-size: 46px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #003366;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0 5px;
+            border-radius: 10px;
+            border: 1px solid #b7c9d6;
+            font-size: 16px;
+            background: rgba(255,255,255,0.85);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #008CBA;
+            box-shadow: 0 0 6px rgba(0, 140, 186, 0.4);
+        }
+
+        .error-message {
+            color: #cc0000;
+            font-size: 14px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .small-link {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        .small-link a {
+            color: #008CBA;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        footer {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 20px;
+            background: #003366;
+            color: white;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay"></div>
+
+    <nav>
+        <div class="logo">LearnMesh</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="register-box">
+        <h1>Create Account</h1>
+
+        <form th:action="@{/register}" th:object="${user}" method="post">
+
+            <label>First Name</label>
+            <input type="text" th:field="*{firstName}">
+            <p class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+
+            <label>Last Name</label>
+            <input type="text" th:field="*{lastName}">
+            <p class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+
+            <label>Email</label>
+            <input type="email" th:field="*{email}">
+            <p class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
+            <label>Password</label>
+            <input type="password" th:field="*{password}">
+            <p class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
+            <div class="center">
+                <button class="btn-primary" type="submit">Register</button>
+            </div>
+        </form>
+
+        <div class="center small-link">
+            Already have an account? <a href="/login">Login</a>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 LearnMesh — Where Learners Link and Ideas Thrive.
+    </footer>
+
+</body>
+</html>

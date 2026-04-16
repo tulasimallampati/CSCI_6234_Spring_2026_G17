@@ -1,0 +1,93 @@
+/* GLOBAL RESET */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* NAVIGATION */
+nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 60px;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+}
+
+nav .logo {
+    font-size: 32px;
+    font-weight: 700;
+    color: #003366;
+    font-family: 'Playfair Display', serif;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 35px;
+}
+
+nav ul li a {
+    color: #003366;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #008CBA;
+    transform: translateY(-2px);
+}
+
+/* DISABLED LINK */
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: default;
+    color: #003366;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* BUTTONS — FINAL, CLEAN, MATCHED PAIR */
+.btn-primary,
+.btn-secondary {
+    padding: 14px 32px;
+    font-size: 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+    min-width: 170px;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Primary */
+.btn-primary {
+    background: #008CBA;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #0077a3;
+    transform: translateY(-2px);
+}
+
+/* Secondary */
+.btn-secondary {
+    background: white;
+    color: #003366;
+    border: 2px solid #003366;
+}
+
+.btn-secondary:hover {
+    background: #003366;
+    color: white;
+    transform: translateY(-2px);
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard | LearnMesh</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=25}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1500&q=80')
+                        no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.70);
+            backdrop-filter: blur(4px);
+            z-index: 1;
+        }
+
+        .dashboard-container {
+            position: relative;
+            z-index: 3;
+            width: 80%;
+            margin: 120px auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 35px;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.55);
+            padding: 35px;
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-title {
+            font-size: 26px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 18px;
+            color: #003366;
+            margin-bottom: 25px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        footer {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 20px;
+            background: #003366;
+            color: white;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay"></div>
+
+    <nav>
+        <div class="logo">LearnMesh</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="dashboard-container">
+
+        <h1>Welcome, <span th:text="${name}"></span>!</h1>
+
+        <div class="grid">
+
+            <div class="card">
+                <div class="card-title">Create Study Group</div>
+                <p>Start a new study group by choosing a topic, time slot, and description.</p>
+                <a href="/groups/create"><button class="btn-primary">Create Group</button></a>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Browse Study Groups</div>
+                <p>Explore all available study groups and join the ones you like.</p>
+                <a href="/groups"><button class="btn-primary">Browse Groups</button></a>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Set Preferences</div>
+                <p>Tell us your learning style, availability, and skill level to get better matches.</p>
+                <a href="/preferences"><button class="btn-primary">Set Preferences</button></a>
+            </div>
+
+            <div class="card">
+                <div class="card-title">View Recommendations</div>
+                <p>See study groups that match your preferences and compatibility score.</p>
+                <a href="/recommendations"><button class="btn-primary">View Recommendations</button></a>
+            </div>
+
+            <div class="card">
+                <div class="card-title">My Study Groups</div>
+                <p>View the groups you’ve joined and check their meeting times.</p>
+                <a href="/my-groups"><button class="btn-primary">My Groups</button></a>
+            </div>
+
+            <!-- ⭐ NEW CARD: My Preferences -->
+            <div class="card">
+                <div class="card-title">My Preferences</div>
+                <p>View, edit, or delete your learning preferences.</p>
+                <a href="/my-preferences"><button class="btn-primary">My Preferences</button></a>
+            </div>
+
+            <div class="card full-width">
+                <div class="card-title">My Profile</div>
+                <p>View and update your personal information and learning preferences.</p>
+                <a href="/profile"><button class="btn-secondary">My Profile</button></a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 LearnMesh — Where Learners Link and Ideas Thrive.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Browse Study Groups | LearnMesh</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=25}">
+
+    <style>
+        /* ⭐ Same background as Dashboard */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1500&q=80')
+                        no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+
+        /* ⭐ Same blur overlay as Dashboard */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.70);
+            backdrop-filter: blur(4px);
+            z-index: 1;
+        }
+
+        nav {
+            position: relative;
+            z-index: 3;
+            background: transparent;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            width: 900px;
+            margin: 140px auto;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            margin-bottom: 25px;
+        }
+
+        .group-card {
+            background: rgba(255, 255, 255, 0.55);
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+        }
+
+        .group-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #003366;
+        }
+
+        .group-link {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<nav>
+    <div class="logo">LearnMesh</div>
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/my-groups">My Groups</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <h1>Browse All Study Groups</h1>
+
+    <div th:if="${groups.isEmpty()}">
+        <p>No study groups available yet.</p>
+    </div>
+
+    <div th:each="group : ${groups}" class="group-card">
+
+        <a th:href="@{'/groups/' + ${group.id}}" class="group-link">
+            <div class="group-title"
+                 th:text="${group.name + ' (by ' 
+                    + group.createdBy.firstName + ' ' 
+                    + group.createdBy.lastName + ')'}">
+            </div>
+        </a>
+
+        <p><strong>Technology:</strong> <span th:text="${group.technology}"></span></p>
+        <p><strong>Knowledge Level:</strong> <span th:text="${group.knowledgeLevel}"></span></p>
+        <p><strong>Meeting Mode:</strong> <span th:text="${group.meetingMode}"></span></p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recommendations | LearnMesh</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=25}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1500&q=80')
+                        no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(6px);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            width: 80%;
+            margin: 140px auto;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #003366;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .pref-btn {
+            background: rgba(255,255,255,0.55);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: none;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            text-align: left;
+            backdrop-filter: blur(6px);
+            transition: 0.2s ease;
+        }
+
+        .pref-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .group-card {
+            background: rgba(255,255,255,0.55);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .good { color: #006600; font-weight: 600; }
+        .bad { color: #cc0000; font-weight: 600; }
+
+        ul {
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .join-btn {
+            background:#003366;
+            color:white;
+            padding:10px 18px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+            transition:0.2s ease;
+            margin-top: 10px;
+        }
+
+        .join-btn:hover {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<nav>
+    <div class="logo">LearnMesh</div>
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/my-preferences">My Preferences</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <h1>Your Recommendations</h1>
+
+    <h2>Select a Preference</h2>
+
+    <div th:each="pref : ${preferences}">
+        <a th:href="@{'/recommendations?prefId=' + ${pref.id}}">
+            <button class="pref-btn">
+                <span th:text="${pref.branch}"></span> |
+                <span th:text="${pref.technology}"></span> |
+                <span th:text="${pref.knowledgeLevel}"></span>
+            </button>
+        </a>
+    </div>
+
+    <div th:if="${results != null}">
+        <h2>Top Matches</h2>
+
+        <div th:each="res, iter : ${results}" class="group-card">
+
+            <h3 th:text="${res.studyGroup.name}"></h3>
+
+            <p>
+                Compatibility Score:
+                <strong th:text="${res.score}"></strong> / 100
+            </p>
+
+            <!-- ⭐ JOIN GROUP BUTTON -->
+            <form th:action="@{/groups/{id}/join(id=${res.studyGroup.id})}" method="post">
+                <button type="submit" class="join-btn">Join Group</button>
+            </form>
+
+            <h4>Why this matches you:</h4>
+
+            <ul>
+                <li th:each="reason : ${explanations[iter.index]}"
+                    th:text="${reason}"
+                    th:classappend="${reason.contains('✗')} ? 'bad' : 'good'">
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

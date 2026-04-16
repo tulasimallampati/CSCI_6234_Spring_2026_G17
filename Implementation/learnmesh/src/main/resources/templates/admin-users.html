@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Users | LearnMesh Admin</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=25}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1500&q=80')
+                        no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(6px);
+            z-index: 1;
+        }
+
+        nav {
+            background: rgba(0, 38, 77, 0.85);
+            backdrop-filter: blur(6px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 5;
+        }
+
+        nav .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            font-family: 'Playfair Display', serif;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            width: 1000px;
+            margin: 140px auto;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(6px);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(0, 38, 77, 0.85);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .btn-delete {
+            background: #cc0000;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-view {
+            background: #0066cc;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-view:hover {
+            background: #004c99;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<nav>
+    <div class="logo">LearnMesh Admin</div>
+    <ul>
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/users">Manage Users</a></li>
+        <li><a href="/admin/groups">Manage Groups</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>Manage Users</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>View</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="u : ${users}">
+                <td th:text="${u.id}"></td>
+                <td th:text="${u.firstName + ' ' + u.lastName}"></td>
+                <td th:text="${u.email}"></td>
+                <td th:text="${u.role}"></td>
+
+                <td>
+                    <a th:href="@{'/admin/users/' + ${u.id}}" class="btn-view">View</a>
+                </td>
+
+                <td>
+                    <form th:action="@{'/admin/users/' + ${u.id} + '/delete'}" method="post">
+                        <button class="btn-delete" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

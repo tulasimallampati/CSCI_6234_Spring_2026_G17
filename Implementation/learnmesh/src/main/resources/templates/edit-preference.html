@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Preference | LearnMesh</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=25}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1500&q=80')
+                        no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(6px);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            width: 60%;
+            margin: 140px auto;
+            background: rgba(255,255,255,0.55);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 40px;
+            font-family: 'Playfair Display', serif;
+            color: #00264d;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: 600;
+            color: #003366;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: #0059b3;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<nav>
+    <div class="logo">LearnMesh</div>
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/my-preferences">My Preferences</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <h1>Edit Preference</h1>
+
+    <form th:action="@{/preferences/update}" method="post" th:object="${preference}">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <label>Branch</label>
+        <select th:field="*{branch}" id="branchSelect">
+            <option th:each="b : ${branches}" th:value="${b}" th:text="${b}"></option>
+        </select>
+
+        <label>Technology</label>
+        <select th:field="*{technology}" id="techSelect">
+            <option th:value="${preference.technology}" th:text="${preference.technology}"></option>
+        </select>
+
+        <label>Knowledge Level</label>
+        <select th:field="*{knowledgeLevel}">
+            <option th:each="lvl : ${levels}" th:value="${lvl}" th:text="${lvl}"></option>
+        </select>
+
+        <label>Meeting Mode</label>
+        <select th:field="*{preferredMeetingMode}">
+            <option th:each="m : ${modes}" th:value="${m}" th:text="${m}"></option>
+        </select>
+
+        <label>Preferred Start Time</label>
+        <input type="datetime-local" name="preferredStartTime" th:value="${formattedStart}"/>
+
+        <label>Preferred End Time</label>
+        <input type="datetime-local" name="preferredEndTime" th:value="${formattedEnd}"/>
+
+        <button class="btn-primary" type="submit">Save Changes</button>
+
+    </form>
+
+</div>
+
+<script>
+    document.getElementById("branchSelect").addEventListener("change", function () {
+        const branch = this.value;
+
+        fetch(`/preferences/technologies?branch=${branch}`)
+            .then(response => response.json())
+            .then(data => {
+                const techSelect = document.getElementById("techSelect");
+                techSelect.innerHTML = "";
+                data.forEach(tech => {
+                    const option = document.createElement("option");
+                    option.value = tech;
+                    option.textContent = tech;
+                    techSelect.appendChild(option);
+                });
+            });
+    });
+</script>
+
+</body>
+</html>
